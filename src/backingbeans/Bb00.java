@@ -1,36 +1,74 @@
 package backingbeans;
 
-import java.util.ArrayList;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import entity.User;
+import holder.OutputUsers;
+import holder.Page;
 import master.UserMaster;
 
 @Named
 @RequestScoped
 public class Bb00 {
 
-	private ArrayList<User> userList;
+	@Inject
+	private UserMaster userMaster;
 
-	@PostConstruct
-	public void init() {
-		userList = UserMaster.getUserList();
+	@Inject
+	private Page page;
+
+	@Inject
+	private OutputUsers users;
+
+	/**
+	 * ページを移動する際の処理を行う。
+	 * @param mode
+	 */
+	public void movePage(String mode) {
+		switch (mode) {
+		case "top":
+			page.topPage();
+			break;
+		case "prev":
+			page.prevPage();
+			break;
+		case "next":
+			page.nextPage();
+			break;
+		case "last":
+			page.lastPage();
+			break;
+		}
+
+		users.setList(userMaster.getUserList(page));
 	}
 
 	/**
-	 * @return userList
+	 * @return page
 	 */
-	public ArrayList<User> getUserList() {
-		return userList;
+	public Page getPage() {
+		return page;
 	}
 
 	/**
-	 * @param userList セットする userList
+	 * @param page セットする page
 	 */
-	public void setUserList(ArrayList<User> userList) {
-		this.userList = userList;
+	public void setPage(Page page) {
+		this.page = page;
+	}
+
+	/**
+	 * @return users
+	 */
+	public OutputUsers getUsers() {
+		return users;
+	}
+
+	/**
+	 * @param users セットする users
+	 */
+	public void setUsers(OutputUsers users) {
+		this.users = users;
 	}
 }

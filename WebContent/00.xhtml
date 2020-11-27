@@ -8,16 +8,38 @@
 	<title>ユーザー一覧</title>
 </h:head>
 <body>
-	<h:dataTable value="#{bb00.userList}" var="u" border="1">
-		<h:column>
-			<f:facet name="header">ID</f:facet>
-			<h:outputText value="#{u.userId}" />
-		</h:column>
+	<h:form>
+		<h:dataTable value="#{bb00.users.list}" var="u" border="1">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{u.userId}" />
+			</h:column>
 
-		<h:column>
-			<f:facet name="header">password</f:facet>
-			<h:outputText value="#{u.password}" />
-		</h:column>
-	</h:dataTable>
+			<h:column>
+				<f:facet name="header">password</f:facet>
+				<h:outputText value="#{u.password}" />
+			</h:column>
+		</h:dataTable>
+
+		<h:panelGrid columns="5">
+			<h:commandLink action="#{bb00.movePage('top')}"
+				rendered="#{bb00.page.prevPageDisplay()}">＜＜&nbsp;</h:commandLink>
+			<h:outputText value="＜＜&nbsp;"
+				rendered="#{!bb00.page.prevPageDisplay()}" />
+			<h:commandLink action="#{bb00.movePage('prev')}"
+				rendered="#{bb00.page.prevPageDisplay()}">＜&nbsp;</h:commandLink>
+			<h:outputText value="＜&nbsp;"
+				rendered="#{!bb00.page.prevPageDisplay()}" />
+					#{bb00.page.currentPage} / #{bb00.page.maxPage}
+					<h:commandLink action="#{bb00.movePage('next')}"
+				rendered="#{bb00.page.nextPageDisplay()}">&nbsp;＞</h:commandLink>
+			<h:outputText value="&nbsp;＞"
+				rendered="#{!bb00.page.nextPageDisplay()}" />
+			<h:commandLink action="#{bb00.movePage('last')}"
+				rendered="#{bb00.page.nextPageDisplay()}">&nbsp;＞＞</h:commandLink>
+			<h:outputText value="&nbsp;＞＞"
+				rendered="#{!bb00.page.nextPageDisplay()}" />
+		</h:panelGrid>
+	</h:form>
 </body>
 </html>

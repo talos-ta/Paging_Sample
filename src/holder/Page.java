@@ -1,35 +1,31 @@
 package holder;
 
-/**
- * @author takumi
- *
- */
-public class Page {
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
+
+@SessionScoped
+public class Page implements Serializable {
+
+	// 1ページ中に表示される最大件数
+	public static final int OUTPUT_NUM = 10;
 
 	// 全レコードの件数
 	private long recordNum;
-	// 1ページ中に表示される最大件数
-	private int outputNum;
 	// 現在のページ
-	private int currentPage;
+	private int currentPage = 1;
 	// 全レコードの件数から算出されるページ数（recordNum/outputNum）
 	private long maxPage;
-
-	{
-		currentPage = 1;
-	}
 
 	/**
 	 * ページングに使う変数を設定する
 	 * @param recordNum
-	 * @param outputNum
 	 */
-	public void config(Long recordNum, Integer outputNum) {
+	public void config(Long recordNum) {
 		this.recordNum = recordNum;
-		this.outputNum = outputNum;
-		this.maxPage = this.recordNum / this.outputNum;
+		this.maxPage = this.recordNum / OUTPUT_NUM;
 
-		if (this.recordNum % this.outputNum != 0
+		if (this.recordNum % OUTPUT_NUM != 0
 				|| this.recordNum == 0) {
 			++this.maxPage;
 		}
@@ -88,7 +84,7 @@ public class Page {
 	 * @return
 	 */
 	public Integer offset() {
-		return (currentPage - 1) * outputNum;
+		return (currentPage - 1) * OUTPUT_NUM;
 	}
 
 	/**
@@ -103,20 +99,6 @@ public class Page {
 	 */
 	public void setRecordNum(long recordNum) {
 		this.recordNum = recordNum;
-	}
-
-	/**
-	 * @return outputNum
-	 */
-	public int getOutputNum() {
-		return outputNum;
-	}
-
-	/**
-	 * @param outputNum セットする outputNum
-	 */
-	public void setOutputNum(int outputNum) {
-		this.outputNum = outputNum;
 	}
 
 	/**
