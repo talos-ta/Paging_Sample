@@ -18,7 +18,7 @@ public class UserMaster implements Serializable {
 
 	{
 		userList = new ArrayList<User>();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 35; i++) {
 			userList.add(new User("user" + i, "test"));
 		}
 	}
@@ -34,8 +34,13 @@ public class UserMaster implements Serializable {
 		int offset = page.offset();
 		int num = Page.OUTPUT_NUM;
 
-		for (int i = offset; i < offset + num; i++) {
-			userList.add(this.userList.get(i));
+		// recordNum % OUTPUT_NUM != 0の場合リストの外を参照する
+		try {
+			for (int i = offset; i < offset + num; i++) {
+				userList.add(this.userList.get(i));
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
 		return userList;
 	}
