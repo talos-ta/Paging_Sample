@@ -7,14 +7,24 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 public class Page implements Serializable {
 
-	// 1ページ中に表示される最大件数
+	/**
+	 * 1ページ中に表示される最大件数
+	 */
 	public static final int OUTPUT_NUM = 10;
 
-	// 全レコードの件数
+	/**
+	 * 全レコードの件数
+	 */
 	private long recordNum;
-	// 現在のページ
+
+	/**
+	 * 現在のページ
+	 */
 	private int currentPage = 1;
-	// 全レコードの件数から算出されるページ数（recordNum/outputNum）
+
+	/**
+	 * 全レコードの件数から算出されるページ数（recordNum/outputNum）
+	 */
 	private long maxPage;
 
 	/**
